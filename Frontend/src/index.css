@@ -14,12 +14,24 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-/* .formulario{
-  background-color: white;
-  margin-left:27rem;  
-  width: 50rem;
-  height: 17rem;
-} */
+.bottonLogin{
+  background-color: #FF4F0F;
+  width:100%;
+  font-size: 20px;
+}
+.botonAccion{
+  max-width: 10rem;
+  margin-top: 15px;
+  margin-left: 5px;
+  
+
+}
+.table{
+  margin-left: 19rem;
+}
+.divBotonModal{
+  text-align: center;
+}
 /*sidebars*/
 .sidenav {
   height: 100%;

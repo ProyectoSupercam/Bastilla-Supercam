@@ -7,7 +7,7 @@ export function Sidebars() {
 
             <div id="mySidenav" className="sidenav">
                 <a href="javascript:void(0)" className="closebtn" onClick={() => closeNav()}>&times;</a>
-                <a href="/"><i className="bi bi-list"></i> iniciar Sesión</a>
+                <a href="/"><i className="bi bi-list"></i> Cerrar Sesión</a>
 
             </div>
 
