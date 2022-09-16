@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, IconButton, InputAdornment } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { Link, Stack, IconButton, InputAdornment, styled, Button } from '@mui/material';
 // components
 import { FormProvider, RHFTextField, RHFCheckbox } from '../../../components/hook-form';
 import Iconify from '../../Iconify';
@@ -19,8 +18,8 @@ export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   const LoginSchema = Yup.object().shape({
-    email: Yup.string().email('Email must be a valid email address').required('Email is required'),
-    password: Yup.string().required('Password is required'),
+    email: Yup.string().email('Ingrese un mail valido').required('Email es requerido'),
+    password: Yup.string().required('Contraseña es requerida'),
   });
 
   const defaultValues = {
@@ -47,11 +46,11 @@ export default function LoginForm() {
 
       <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)} >
         <Stack spacing={3}>
-          <RHFTextField name="email" label="Email address" />
+          <RHFTextField name="email" label="Dirección de Email" />
 
           <RHFTextField
             name="password"
-            label="Password"
+            label="Contraseña"
             type={showPassword ? 'text' : 'password'}
             InputProps={{
               endAdornment: (
@@ -67,15 +66,15 @@ export default function LoginForm() {
         </Stack>
 
         <Stack direction="row" alignItems="center" justifyContent="space-between" sx={{ my: 2 }}>
-          <RHFCheckbox name="remember" label="Remember me" />
+          <RHFCheckbox name="remember" label="Recordar" />
           <Link variant="subtitle2" underline="hover">
-            Forgot password?
+            ¿Olvidaste la contraseña?
           </Link>
         </Stack>
 
-        <LoadingButton fullWidth size="large" type="submit" variant="contained" loading={isSubmitting}>
-          Login
-        </LoadingButton>
+        <button className ="bottonLogin btn" type="submit" >
+          Iniciar Sesión
+        </button>
       </FormProvider>
 
 
