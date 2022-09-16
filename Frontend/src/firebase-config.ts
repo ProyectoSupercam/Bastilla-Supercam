@@ -1,8 +1,8 @@
 
 import { initializeApp } from "firebase/app";
 import {getFirestore} from "firebase/firestore"
-import { getAnalytics } from "firebase/analytics";
-import { GoogleAuthProvider,getAuth, signInWithRedirect,signInWithCredential, getRedirectResult} from "firebase/auth";
+import { Auth, getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+
 
 
 
@@ -21,8 +21,10 @@ const firebaseConfig = {
 // Initialize Firebase
 // const provider = new GoogleAuthProvider();
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+//@ts-ignore
+export const auth = Auth()
 export const bd = getFirestore(app);
+
 
 //authenticate
 

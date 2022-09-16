@@ -45,7 +45,6 @@ export default function Login() {
       <Container maxWidth="md">
         <ContentStyle>
           <SectionStyle>
-
             <Typography variant="h2" gutterBottom>
               Supercam-Bastilla
             </Typography>
