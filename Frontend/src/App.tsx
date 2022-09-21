@@ -1,9 +1,9 @@
 
 import React from "react";
-import { Sidebars } from "./pages/sidebars"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Login from "./pages/Login/Login";
-import { ViewData } from "./components/firestore/firestore";
+import { ViewData } from "./components/pages/firestore/firestore";
+import { Login } from "./components/pages/Login/login";
+import { Sidebars } from "./components/pages/sidebars/sidebars";
 
 
 function Inicio() {
@@ -26,7 +26,7 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />}></Route>
+          <Route path="/" element={<Login/>}></Route>
           <Route path="/home" element={<Inicio />}></Route>
         </Routes>
       </BrowserRouter>

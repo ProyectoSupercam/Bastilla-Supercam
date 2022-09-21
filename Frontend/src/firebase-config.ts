@@ -1,10 +1,9 @@
-
+import firebaseui from "firebaseui"
 import { initializeApp } from "firebase/app";
-import {getFirestore} from "firebase/firestore"
-import { Auth, getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {Firestore, getFirestore} from "firebase/firestore"
 
 
-
+var firebase = require('firebase');
 
 
 // Your web app's Firebase configuration
@@ -21,39 +20,17 @@ const firebaseConfig = {
 // Initialize Firebase
 // const provider = new GoogleAuthProvider();
 const app = initializeApp(firebaseConfig);
-//@ts-ignore
-export const auth = Auth()
 export const bd = getFirestore(app);
+ export const auth = Firestore 
 
+ 
+const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
-//authenticate
+//autenticacion
 
-// let auth = getAuth();
-// signInWithRedirect(auth, provider);
-// getRedirectResult(auth)
-//   .then((result) => {
-//     // This gives you a Google Access Token. You can use it to access Google APIs.
-//     if(result != null){
-//       const credential = GoogleAuthProvider.credentialFromResult(result);
-//       const user = result.user;
-//       if (credential != null){
-//         const token = credential.accessToken;
-//       }else{
-//         console.log(credential)
-//       }
-//     }else{
-//       console.info(result)
-//     }
-//     // The signed-in user info.
-
-//   }).catch((error) => {
-//     // Handle Errors here.
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     // The email of the user's account used.
-//     const email = error.customData.email;
-//     // The AuthCredential type that was used.
-//     const credential = GoogleAuthProvider.credentialFromError(error);
-//     // ...
-//   }) 
-
+ui.start('#firebaseui-auth-container', {
+  signInOptions: [
+    firebase.auth.EmailAuthProvider.PROVIDER_ID
+  ],
+  // Other config options...
+});
