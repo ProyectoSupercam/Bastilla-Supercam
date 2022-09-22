@@ -8,7 +8,7 @@ import { useEffect, useState } from "react"
 
 
 export function ViewData() {
-    const [estado, setEstado] = useState(null)
+    const [estado, setEstado] = useState(false)
     const [id, setId] = useState<string>("")
     const [user, setUser] = useState<userDTO[]>([])
     const [name, setName] = useState<string>("")
@@ -17,6 +17,8 @@ export function ViewData() {
     const [habilitado, sethabilitado] = useState<string>("")
 
 
+
+    //traemos todos los datos de firestore
     const getData = async () => {
 
         try {
@@ -41,7 +43,7 @@ export function ViewData() {
 
     //obtenemos los datos del usuario segun su id
     //@ts-ignore
-    const getById = async (id) => {
+    const getByIdData = async (id) => {
         const resp = doc(bd, "Usuarios", id)
         const document = await getDoc(resp)
         //@ts-ignore
@@ -50,12 +52,39 @@ export function ViewData() {
         setApellido(Apellido)
         setDni(DNI)
         sethabilitado(habilitado)
-    }
-    const updateForm = async () =>{
-        
+        setId(id)
+        setEstado(true)
     }
 
-    const submitForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    //edición de usuarios
+    //@ts-ignore
+    const updateData = async (e) => {
+        e.preventDefault()
+        const listUpdate = {
+            Nombre: name,
+            Apellido: apellido,
+            DNI: dni,
+            habilitado: habilitado
+        }
+        try {
+            const update = doc(bd, "Usuarios", id)
+            setDoc(update, listUpdate)
+            console.log("tarea editada", update.id)
+            getData()
+
+        } catch (error) {
+            console.log(error)
+
+        }
+
+        setName("")
+        setApellido("")
+        setDni("")
+        sethabilitado("")
+        setEstado(false)
+    }
+    //Creación de usuarios
+    const createData = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
 
         try {
@@ -74,9 +103,15 @@ export function ViewData() {
             console.log(error)
 
         }
-
-
-
+    }
+    //submit de formulario de edición
+    //@ts-ignore
+    const deleteData =async (id) => {
+        try {
+            
+        } catch (error) {
+            
+        }
     }
 
     return (
@@ -111,13 +146,7 @@ export function ViewData() {
                                 return <button type="button" className="btn text-white" disabled>GenerarQR</button>;
                             }
                         };
-                        const cambiarBoton = () => {
-                            if (estado) {
-                                <button type="submit" className=" botonAccion btn btn-success"  >Editar información</button>
-                            } else {
-                                <button type="submit" className=" botonAccion btn btn-success"  >Actualizar información</button>
-                            }
-                        }
+
 
 
                         return (
@@ -137,7 +166,7 @@ export function ViewData() {
                                 </td>
                                 <td >
                                     {generarQR()}
-                                    <button type="button" className="btn text-white " data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={(id) => { getById(users.Id) }} >
+                                    <button type="button" className="btn text-white " data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={(id) => { getByIdData(users.Id) }} >
                                         Ver información
                                     </button>
 
@@ -155,6 +184,7 @@ export function ViewData() {
             {/* modal de informacion */}
 
 
+
             <div className="modal fade" id="exampleModal" tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
@@ -163,25 +193,25 @@ export function ViewData() {
                             <button type="button" className="btn-close " data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={updateForm} className="form-group">
+                            <form onSubmit={updateData} className="form-group">
                                 <div>
                                     <label htmlFor="disabledTextInput" className="form-label text-dark" > Nombre</label>
-                                    <input type="text" id="disabledTextInput" className="form-control" readOnly value={name}></input></div>
+                                    <input type="text" id="disabledTextInput" className="form-control" onChange={(e) => setName(e.target.value)} value={name}></input></div>
                                 <div>
                                     <label htmlFor="disabledTextInput" className="form-label text-dark" > Apellido</label>
-                                    <input type="text" id="disabledTextInput" className="form-control text-dark" readOnly value={apellido} ></input>
+                                    <input type="text" id="disabledTextInput" className="form-control text-dark" onChange={(e) => setApellido(e.target.value)} value={apellido} ></input>
                                 </div>
 
                                 <div>
                                     <label htmlFor="disabledTextInput" className="form-label text-dark"> DNI</label>
-                                    <input type="text" id="disabledTextInput" className="form-control text-dark" readOnly value={dni}></input></div>
+                                    <input type="text" id="disabledTextInput" className="form-control text-dark" onChange={(e) => setDni(e.target.value)} value={dni}></input></div>
 
                                 <div>
                                     <label htmlFor="disabledTextInput" className="form-label text-dark" > Habilitado</label>
-                                    <input type="text" id="disabledTextInput" className="form-control text-dark" value={habilitado} readOnly ></input>
+                                    <input type="text" id="disabledTextInput" className="form-control text-dark" onChange={(e) => sethabilitado(e.target.value)} value={habilitado}  ></input>
                                 </div>
                                 <div className="divBotonModal">
-                                    cambiarBoton()
+                                    <button type="submit" className=" botonAccion btn btn-success"  >Actualizar información</button>
                                     <button type="button" className="botonAccion btn btn-danger">Eliminar usuario</button>
                                 </div>
                             </form>
@@ -203,7 +233,7 @@ export function ViewData() {
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div className="modal-body">
-                            <form onSubmit={submitForm} className="form-group">
+                            <form onSubmit={createData} className="form-group">
                                 <div>
                                     <label htmlFor="disabledTextInput" className="form-label" > Nombre</label>
                                     <input type="text" id="disabledTextInput" className="form-control" onChange={(e) => setName(e.target.value)}></input></div>

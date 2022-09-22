@@ -3,7 +3,6 @@ import { initializeApp } from "firebase/app";
 import {Firestore, getFirestore} from "firebase/firestore"
 
 
-var firebase = require('firebase');
 
 
 // Your web app's Firebase configuration
@@ -24,13 +23,13 @@ export const bd = getFirestore(app);
  export const auth = Firestore 
 
  
-const ui = new firebaseui.auth.AuthUI(firebase.auth());
+// const ui = new firebaseui.auth.AuthUI(firebase.auth());
 
 //autenticacion
 
-ui.start('#firebaseui-auth-container', {
-  signInOptions: [
-    firebase.auth.EmailAuthProvider.PROVIDER_ID
-  ],
-  // Other config options...
-});
+// ui.start('#firebaseui-auth-container', {
+//   signInOptions: [
+//     firebase.auth.EmailAuthProvider.PROVIDER_ID
+//   ],
+//   // Other config options...
+// });
