@@ -1,4 +1,4 @@
-import { collection, getDocs, doc, updateDoc, setDoc, addDoc, getDoc } from "firebase/firestore";
+import { collection, getDocs, doc, updateDoc, setDoc, addDoc, getDoc, deleteDoc } from "firebase/firestore";
 import { bd } from "../../../firebase-config";
 import { userDTO } from "../../interfaces/interface.dto";
 import { useEffect, useState } from "react"
@@ -55,6 +55,19 @@ export function ViewData() {
         setId(id)
         setEstado(true)
     }
+    //submit de formulario de edición
+    //@ts-ignore
+    const deleteData =async (id) => {
+
+        try {
+            const Eliminar = doc(bd, "Usuarios", id)
+            deleteDoc(Eliminar)
+            getData()
+            
+        } catch (error) {
+           console.log(error) 
+        }
+    }
 
     //edición de usuarios
     //@ts-ignore
@@ -104,15 +117,7 @@ export function ViewData() {
 
         }
     }
-    //submit de formulario de edición
-    //@ts-ignore
-    const deleteData =async (id) => {
-        try {
-            
-        } catch (error) {
-            
-        }
-    }
+
 
     return (
         <div>
@@ -212,7 +217,7 @@ export function ViewData() {
                                 </div>
                                 <div className="divBotonModal">
                                     <button type="submit" className=" botonAccion btn btn-success"  >Actualizar información</button>
-                                    <button type="button" className="botonAccion btn btn-danger">Eliminar usuario</button>
+                                    <button onClick={(Id)=>{deleteData(id)}} type="button" className="botonAccion btn btn-danger">Eliminar usuario</button>
                                 </div>
                             </form>
                         </div>
