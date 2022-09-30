@@ -2,6 +2,7 @@ import { collection, getDocs, doc, updateDoc, setDoc, addDoc, getDoc, deleteDoc 
 import { bd } from "../../../firebase-config";
 import { userDTO } from "../../interfaces/interface.dto";
 import { useEffect, useState } from "react"
+import QRCode from "react-qr-code";
 
 
 
@@ -15,7 +16,37 @@ export function ViewData() {
     const [apellido, setApellido] = useState<string>("")
     const [dni, setDni] = useState<string>("")
     const [habilitado, sethabilitado] = useState<string>("")
+    const [word, setWord] = useState([""]);
+    const [size, setSize] = useState(400);
+    const [bgColor, setBgColor] = useState("ffffff");
+    const [qrCode, setQrCode] = useState("");
 
+
+    //generador de QR
+
+
+    function handleClick() {
+        setWord([name, apellido, dni, habilitado]);
+
+
+    }
+    useEffect(() => {
+        setQrCode
+            (`http://localhost:5173/ViewData/QR/?data=${word}!&size=${size}x${size}&bgcolor=${bgColor}`);
+    }, []);
+
+    const QR = () => {
+        return (
+            <div >
+                <div className="output-box">
+                    <img src={qrCode} alt="" />
+                    <a href={qrCode} download="QRCode">
+                        <button type="button">Download</button>
+                    </a>
+                </div>
+            </div>
+        )
+    }
 
 
     //traemos todos los datos de firestore
@@ -57,15 +88,15 @@ export function ViewData() {
     }
     //submit de formulario de edición
     //@ts-ignore
-    const deleteData =async (id) => {
+    const deleteData = async (id) => {
 
         try {
             const Eliminar = doc(bd, "Usuarios", id)
             deleteDoc(Eliminar)
             getData()
-            
+
         } catch (error) {
-           console.log(error) 
+            console.log(error)
         }
     }
 
@@ -146,7 +177,7 @@ export function ViewData() {
                     {user.map((users) => {
                         const generarQR = () => {
                             if (users.habilitado === "Si" || users.habilitado === "si" || users.habilitado === "SI") {
-                                return <button className="btn text-white"> Generar QR</button>;
+                                return <button className="btn text-white" onClick={handleClick}> Generar QR</button>;
                             } else {
                                 return <button type="button" className="btn text-white" disabled>GenerarQR</button>;
                             }
@@ -174,6 +205,7 @@ export function ViewData() {
                                     <button type="button" className="btn text-white " data-bs-toggle="modal" data-bs-target="#exampleModal" onClick={(id) => { getByIdData(users.Id) }} >
                                         Ver información
                                     </button>
+
 
                                 </td>
                             </tr>
@@ -217,7 +249,7 @@ export function ViewData() {
                                 </div>
                                 <div className="divBotonModal">
                                     <button type="submit" className=" botonAccion btn btn-success"  >Actualizar información</button>
-                                    <button onClick={(Id)=>{deleteData(id)}} type="button" className="botonAccion btn btn-danger">Eliminar usuario</button>
+                                    <button onClick={(Id) => { deleteData(id) }} type="button" className="botonAccion btn btn-danger">Eliminar usuario</button>
                                 </div>
                             </form>
                         </div>

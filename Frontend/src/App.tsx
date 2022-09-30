@@ -1,5 +1,4 @@
 
-import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { ViewData } from "./components/pages/firestore/firestore";
 import { Login } from "./components/pages/Login/login";
