@@ -5,8 +5,10 @@
 
 ## ¿Cómo iniciarlo? 
             
- 1. Clonar el repositorio y pegarlo de la siguiente forma: **git clone https:// "enlace del codigo a clonar"**
- 2. Una vez dentro de la carpeta principal, hacemos en consola `npm install` 
+ 1. Copiar el repositorio y pegarlo en la consola dentro de la carpeta donde queramos almacenar el codigo y colocarlo de la siguiente forma: **git clone https:// "enlace del codigo a clonar"**
+ 2. Agregar la carpeta donde esta los archivos a el editor de codigo favorito
+ 3. Ingresamos a la carpeta Frontend mediante consola 
+ 4. Una vez dentro, texteamos **npm i** para instalar dependencias
  3. Una vez descargadas todas las dependencias requeridas para el correcto funcionamiento de la aplicación, ingresamos por consola el siguiente comando: `npm run dev`
  
  
@@ -16,5 +18,5 @@
   - Typescript
   - React con vite
   - Firebase
-  - QRCode
+  - QRCodejs
   - Bootstrap
